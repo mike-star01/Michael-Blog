@@ -41,7 +41,7 @@ def load_user(user_id):
 ##CONFIGURE TABLES
 
 class User(UserMixin, db.Model):
-    __tablename__ = "Users"
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
@@ -55,7 +55,7 @@ class BlogPost(db.Model):
     __tablename__ = "blog_posts"
     id = db.Column(db.Integer, primary_key=True)
 
-    author_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     author = relationship("User", back_populates="posts")
 
     title = db.Column(db.String(250), unique=True, nullable=False)
@@ -71,7 +71,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text, nullable=False)
 
-    author_id = db.Column(db.Integer, db.ForeignKey("Users.id"))
+    author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     comment_author = relationship("User", back_populates="comments")
 
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
